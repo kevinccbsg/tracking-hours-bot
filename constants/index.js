@@ -1,5 +1,5 @@
 const TODAY_COMMAND = 'today';
-const FULL_WEEK = 'fullWeek';
+const FULL_WEEK = 'week';
 
 const AVAILABLE_COMMANDS = [
   TODAY_COMMAND,

@@ -17,11 +17,11 @@ const openImage = path => new Promise((resolve, reject) => {
   exec(`open ${path}`, (error, _stdout, stderr) => {
     if (error) {
         console.log(`error: ${error.message}`);
-        return reject(`error: ${error.message}`);
+        return resolve(`error: ${error.message}`);
     }
     if (stderr) {
         console.log(`stderr: ${stderr}`);
-        return reject(`stderr: ${stderr}`);
+        return resolve(`stderr: ${stderr}`);
     }
     return resolve();
   });

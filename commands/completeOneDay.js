@@ -3,7 +3,18 @@ const { weekDayMap } = require('../constants');
 
 const completeOneDay = async (page, date, projectName, message, hours = 8) => {
   const weekDay = date.getDay();
+  if (weekDay === 0 || weekDay === 6) {
+    console.log('we do not support weekend working hours');
+    return;
+  }
   const weekSelector = weekDayMap[weekDay];
+  // validate if it was already completed
+  const completedSelector = ' > div.panel-body > div:nth-child(3) > div > div.row > div > div.col-xs-12.col-lg-4 > div';
+  const isCompleted = await page.$(`${weekSelector}${completedSelector}`);
+  if (!!isCompleted) {
+    console.log('Today was already completed');
+    return;
+  }
   // complete one day
   // project selector
   await page.click(`${weekSelector} > div.panel-body > div.row > div:nth-child(3) > div.col-md-12.col-lg-4 > div > div.SearchableDropdown`)
