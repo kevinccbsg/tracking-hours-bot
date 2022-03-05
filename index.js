@@ -1,22 +1,9 @@
 require('dotenv').config();
-const { exec } = require('child_process');
 const puppeteer = require('puppeteer');
 const completeOneDay = require('./commands/completeOneDay');
-const { delay } = require('./utils');
-
-const openImage = path => new Promise((resolve, reject) => {
-  exec(`open ${path}`, (error, _stdout, stderr) => {
-    if (error) {
-        console.log(`error: ${error.message}`);
-        return reject(`error: ${error.message}`);
-    }
-    if (stderr) {
-        console.log(`stderr: ${stderr}`);
-        return reject(`stderr: ${stderr}`);
-    }
-    return resolve();
-  });
-});
+const fullWeek = require('./commands/fullWeek');
+const { delay, getMonday, openImage } = require('./utils');
+const { TODAY_COMMAND, FULL_WEEK, AVAILABLE_COMMANDS } = require('./constants');
 
 const [command, project, message, hourArg] = process.argv.slice(2);
 
@@ -25,8 +12,12 @@ const [command, project, message, hourArg] = process.argv.slice(2);
     console.error('Command is required');
     process.exit(1);
   }
+  if (!AVAILABLE_COMMANDS.includes(command)) {
+    console.error(`Command is not part of the available commands ${AVAILABLE_COMMANDS.join(', ')}`);
+    process.exit(2);
+  }
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
   });
   const page = await browser.newPage();
   await page.goto(process.env.TRACKING_APP);
@@ -45,7 +36,13 @@ const [command, project, message, hourArg] = process.argv.slice(2);
   // get all the currently open pages as an array
   const pages = await browser.pages();
   const newPage = pages[pages.length - 1];
-  await completeOneDay(newPage, today, project, message, hours);
+  if (command === TODAY_COMMAND) {
+    await completeOneDay(newPage, today, project, message, hours);
+  } else if (command === FULL_WEEK) {
+    const monday = getMonday(today);
+    await completeOneDay(newPage, monday, project, message, hours);
+    await fullWeek(newPage);
+  }
   await delay(1000);
   await newPage.screenshot({
     path: 'screenshots/example.png',

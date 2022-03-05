@@ -32,7 +32,7 @@ This command will update that day with a few parameters
 - Hours (Default. 8)
 
 ```
-node index.js dayOnly "Infinitas - Studiemeister 2021" "STM & HST development" 8
+node index.js dayOnly "Project title" "Project description" 8
 ```
 
 ## Improve execution
@@ -40,7 +40,7 @@ node index.js dayOnly "Infinitas - Studiemeister 2021" "STM & HST development" 8
 In order to improve the execution you can create an alias in your terminal profiles (bashrc or zshrc). That will allow you to run the command in any path of the project.
 
 ```
-track-hours dayOnly "Infinitas - Studiemeister 2021" "STM & HST development"
+track-hours dayOnly "Project title" "Project description"
 ```
 
 You can run these commands to create that alias.
