@@ -12,7 +12,7 @@ const weekDayMap = {
 
 const completeOneDay = async (page, date, projectName, message, hours = 8) => {
   const weekDay = date.getDay();
-  const weekSelector = weekDayMap[5];
+  const weekSelector = weekDayMap[weekDay];
   // complete one day
   // project selector
   await page.click(`${weekSelector} > div.panel-body > div.row > div:nth-child(3) > div.col-md-12.col-lg-4 > div > div.SearchableDropdown`)
@@ -46,7 +46,7 @@ const completeOneDay = async (page, date, projectName, message, hours = 8) => {
   }, weekSelector);
   await page.type(`${weekSelector} > div.panel-body > div.row > div:nth-child(3) > div.col-md-12.col-lg-2 > div > div:nth-child(1) > input`, `${hours}`);
   // add button
-  // await page.click(`${weekSelector} > div.panel-body > div.row > div:nth-child(7) > div:nth-child(1) > p > button`);
+  await page.click(`${weekSelector} > div.panel-body > div.row > div:nth-child(7) > div:nth-child(1) > p > button`);
 };
 
 module.exports = completeOneDay;

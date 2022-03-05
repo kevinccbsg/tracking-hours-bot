@@ -46,11 +46,11 @@ const [command, project, message, hourArg] = process.argv.slice(2);
   const pages = await browser.pages();
   const newPage = pages[pages.length - 1];
   await completeOneDay(newPage, today, project, message, hours);
+  await delay(1000);
   await newPage.screenshot({
     path: 'screenshots/example.png',
     fullPage: true
   });
-  await delay(2000);
   await browser.close();
   await openImage('screenshots/example.png');
 })();
