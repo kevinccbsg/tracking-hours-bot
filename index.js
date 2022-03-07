@@ -54,10 +54,11 @@ const [command, project, message, hourArg] = process.argv.slice(2);
     await fullWeek(newPage);
   }
   await delay(1000);
+  const screenshotPath = path.join(__dirname, 'screenshots', 'example.png');
   await newPage.screenshot({
-    path: 'screenshots/example.png',
+    path: screenshotPath,
     fullPage: true
   });
   await browser.close();
-  await openImage('screenshots/example.png');
+  await openImage(screenshotPath);
 })();
