@@ -20,7 +20,7 @@ const [command, project, message, hourArg] = process.argv.slice(2);
     process.exit(2);
   }
   const browser = await puppeteer.launch({
-    headless: false,
+    headless: true,
   });
   const page = await browser.newPage();
   await page.goto(process.env.TRACKING_APP);
