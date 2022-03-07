@@ -15,15 +15,15 @@ const fullWeek = async page => {
     }
     const copyWeekButton = ' > div.panel-body > div.row > div:nth-child(1) > button';
     await page.click(`${selector}${copyWeekButton}`);
-    await delay(500);
+    await delay(1000);
     const copyAllButton = 'body > div.bootbox.modal.fade.in > div > div > div.modal-footer > button:nth-child(1)';
     await page.waitForSelector(copyAllButton);
     await page.click(copyAllButton);
-    await delay(500);
+    await delay(1000);
     const confirmButton = 'body > div.bootbox.modal.fade.bootbox-confirm.in > div > div > div.modal-footer > button:nth-child(2)';
     await page.waitForSelector(confirmButton);
     await page.click(confirmButton);
-    await delay(2000);
+    await delay(1500);
   }
 };
 

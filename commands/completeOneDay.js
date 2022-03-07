@@ -1,5 +1,5 @@
 const { delay } = require('../utils');
-const { weekDayMap } = require('../constants');
+const { weekDayMap, PROJECT_SELECTOR_ID } = require('../constants');
 
 const completeOneDay = async (page, date, projectName, message, hours = 8) => {
   const weekDay = date.getDay();
@@ -17,9 +17,10 @@ const completeOneDay = async (page, date, projectName, message, hours = 8) => {
   }
   // complete one day
   // project selector
-  await page.click(`${weekSelector} > div.panel-body > div.row > div:nth-child(3) > div.col-md-12.col-lg-4 > div > div.SearchableDropdown`)
-  await page.waitForSelector('#react-select-10-option-0-0');
-  const elementId = await page.evaluate((selector, projectName) => {
+  await page.click(`${weekSelector} > div.panel-body > div.row > div:nth-child(3) > div.col-md-12.col-lg-4 > div > div.SearchableDropdown`);
+  const projectSelectorIndex = PROJECT_SELECTOR_ID[weekDay];
+  await page.waitForSelector(`#react-select-${projectSelectorIndex}-option-0-0`);
+  await page.evaluate(projectName => {
     // $x() is not a JS standard -
     // this is only sugar syntax in chrome devtools
     // use document.evaluate()
@@ -32,10 +33,9 @@ const completeOneDay = async (page, date, projectName, message, hours = 8) => {
             null,
         )
         .singleNodeValue;
-    console.log('node', projectItem);
     projectItem.click();
     return projectItem?.id;
-  }, weekSelector, projectName);
+  }, projectName);
   // click project
   await page.click(`${weekSelector} > div.panel-body > div.row > div:nth-child(3) > div.col-md-12.col-lg-4 > div > div.SearchableDropdown`)
   // Comment input

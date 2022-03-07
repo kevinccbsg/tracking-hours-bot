@@ -1,4 +1,7 @@
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({
+  path: path.join(__dirname, '.env')
+});
 const puppeteer = require('puppeteer');
 const completeOneDay = require('./commands/completeOneDay');
 const fullWeek = require('./commands/week');
@@ -17,7 +20,7 @@ const [command, project, message, hourArg] = process.argv.slice(2);
     process.exit(2);
   }
   const browser = await puppeteer.launch({
-    headless: true,
+    headless: false,
   });
   const page = await browser.newPage();
   await page.goto(process.env.TRACKING_APP);
@@ -47,6 +50,7 @@ const [command, project, message, hourArg] = process.argv.slice(2);
   } else if (command === FULL_WEEK) {
     const monday = getMonday(today);
     await completeOneDay(newPage, monday, project, message, hours);
+    await delay(2000);
     await fullWeek(newPage);
   }
   await delay(1000);

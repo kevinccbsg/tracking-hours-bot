@@ -17,9 +17,18 @@ const AVAILABLE_COMMANDS = [
   5: '#timesheet_app > div > div > div.panel.panel-primary > div.panel-body > div > div:nth-child(10)',
 };
 
+const PROJECT_SELECTOR_ID = {
+  1: 2,
+  2: 4,
+  3: 6,
+  4: 8,
+  5: 10,
+};
+
 module.exports = {
   AVAILABLE_COMMANDS,
   TODAY_COMMAND,
   FULL_WEEK,
   weekDayMap,
+  PROJECT_SELECTOR_ID,
 };
